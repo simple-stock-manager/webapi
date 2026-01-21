@@ -7,8 +7,20 @@ from .database import engine, Base, get_session
 from .models import InventoryItem
 from .schemas import CreateInventoryItem, UpdateInventoryItem, InventoryItemResponse
 
+from fastapi.middleware.cors import CORSMiddleware
+
+
 app = FastAPI(title="Simple Stock Manager API")
 
+origins = ["http://localhost:5173"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.on_event("startup")
 async def on_startup():
